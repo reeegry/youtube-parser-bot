@@ -1,0 +1,54 @@
+import sqlite3
+import logging
+
+logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
+                    level=logging.INFO)
+
+
+class SQLighter:
+
+    def __init__(self, database):
+        self.connection = sqlite3.connect(database)
+        self.cursor = self.connection.cursor()
+        self.cursor.execute(self.db_create())
+
+    @staticmethod
+    def db_create():
+        return """
+        CREATE TABLE IF NOT EXISTS "subscriptions" (
+        "id"	INTEGER,
+        "user_id" VARCHAR(255) NOT NULL, 
+        "status" BOOLEAN NOT NULL DEFAULT 'True',
+        "channel"	TEXT, 
+        PRIMARY KEY("id" AUTOINCREMENT)
+        );
+        """
+
+    def get_subscriptions(self, status=True):
+        with self.connection:
+            return self.cursor.execute("SELECT * FROM `subscriptions` WHERE `status` = ?", (status,)).fetchall()
+
+    def subscriber_exists(self, user_id):
+        with self.connection:
+            result = self.cursor.execute("SELECT * FROM `subscriptions` WHERE `user_id` = ?", (user_id,)).fetchall()
+            return bool(len(result))
+
+    def add_subscriber(self, user_id, status=True):
+        with self.connection:
+            return self.cursor.execute("INSERT INTO `subscriptions` (`user_id`, `status`) VALUES(?,?)", (user_id,
+                                                                                                         status))
+
+    def update_subscription(self, user_id, status):
+        with self.connection:
+            return self.cursor.execute("UPDATE `subscriptions` SET `status` = ? WHERE `user_id` = ?", (status, user_id))
+
+    def update_channel(self, user_id, channel):
+        with self.connection:
+            return self.cursor.execute("UPDATE `subscriptions` SET `channel` = ? WHERE `user_id` = ?", (channel,
+                                                                                                        user_id))
+
+    def close(self):
+        self.connection.close()
+
+
+db = SQLighter("utils/db_api/db.db")
