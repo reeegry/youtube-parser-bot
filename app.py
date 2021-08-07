@@ -1,15 +1,17 @@
 from aiogram import executor
 
+from utils.parser import video_check
 from loader import dp
 import middlewares, filters, handlers
 from utils.notify_admins import on_startup_notify
 from utils.set_bot_commands import set_default_commands
+# import utils.db_api.db_sqlite3
 
 
 async def on_startup(dispatcher):
     await set_default_commands(dispatcher)
     await on_startup_notify(dispatcher)
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
+    video_check.loop.create_task(video_check.periodic())
     executor.start_polling(dp, on_startup=on_startup)

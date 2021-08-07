@@ -6,7 +6,7 @@ from utils.db_api.db_sqlite3 import *
 
 
 @dp.message_handler(state=None)
-async def parse_link(message: types.Message):
+async def echo(message: types.Message):
     user_id = message.from_user.id
     if not db.subscriber_exists(user_id):
         db.add_subscriber(user_id)
