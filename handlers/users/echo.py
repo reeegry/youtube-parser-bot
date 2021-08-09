@@ -13,6 +13,7 @@ async def echo(message: types.Message):
     else:
         db.update_subscription(user_id, True)
     db.update_channel(user_id, message.text)
+    db.update_video_title(user_id, "None")
     await message.answer(f"добавлен")
 
 

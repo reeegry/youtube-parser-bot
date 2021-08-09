@@ -17,11 +17,11 @@ class SQLighter:
         CREATE TABLE IF NOT EXISTS "subscriptions" (
         "id"	INTEGER,
         "user_id" VARCHAR(255) NOT NULL, 
-        "status" BOOLEAN NOT NULL DEFAULT 'True',
+        "status" BOOLEAN NOT NULL DEFAULT TRUE,
         "channel"	TEXT, 
         "last_video_url"	TEXT,
-        "last_video_title"	TEXT,
-        "send_message"	BOOLEAN DEFAULT 'False',
+        "last_video_title"	TEXT NOT NULL DEFAULT 'None',
+        "send_message"	BOOLEAN DEFAULT FALSE,
         PRIMARY KEY("id" AUTOINCREMENT)
         );
         """
