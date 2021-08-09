@@ -1,7 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 from aiogram.types.input_file import InputFile
-from data.photo import *
 from loader import dp
 
 
