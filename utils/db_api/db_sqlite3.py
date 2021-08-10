@@ -18,10 +18,10 @@ class SQLighter:
         "id"	INTEGER,
         "user_id" VARCHAR(255) NOT NULL, 
         "status" BOOLEAN NOT NULL DEFAULT TRUE,
-        "channel"	TEXT, 
+        "channel_id"	TEXT, 
         "last_video_url"	TEXT,
         "last_video_title"	TEXT NOT NULL DEFAULT 'None',
-        "send_message"	BOOLEAN DEFAULT FALSE,
+        "send_message"	BOOLEAN DEFAULT FALSE, 
         PRIMARY KEY("id" AUTOINCREMENT)
         );
         """
@@ -60,9 +60,9 @@ class SQLighter:
         with self.connection:
             return self.cursor.execute("UPDATE `subscriptions` SET `status` = ? WHERE `user_id` = ?", (status, user_id))
 
-    def update_channel(self, user_id, channel):
+    def update_channel_id(self, user_id, channel_id):
         with self.connection:
-            return self.cursor.execute("UPDATE `subscriptions` SET `channel` = ? WHERE `user_id` = ?", (channel,
+            return self.cursor.execute("UPDATE `subscriptions` SET `channel_id` = ? WHERE `user_id` = ?", (channel_id,
                                                                                                         user_id))
 
     def change_send_message_status(self, user_id, send_message):

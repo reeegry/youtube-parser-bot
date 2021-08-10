@@ -1,5 +1,5 @@
 import asyncio
-from .parser import parse
+from .youtube_api_parser import get_information
 from ..db_api.db_sqlite3 import *
 
 
@@ -9,11 +9,11 @@ async def periodic():
 
         for user in db.get_subscriptions():
             user_id = user[1]
-            channel_url = user[3]
+            channel_id = user[3]
             video_title = user[5]
 
             try:
-                video_title_new, video_url_new = parse(channel_url)
+                video_title_new, video_url_new = get_information(channel_id)
                 if video_title_new != video_title and video_title != "None":
                     db.change_send_message_status(user_id, send_message=True)
                 db.update_video_title(user_id, video_title_new)
