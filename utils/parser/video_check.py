@@ -1,6 +1,6 @@
 import asyncio
-from .youtube_api_parser import get_information
-from ..db_api.db_sqlite3 import *
+from .parser import youtube_get_information
+from ..db_api.db_sqlite import *
 
 
 async def periodic():
@@ -13,7 +13,7 @@ async def periodic():
             video_title = user[5]
 
             try:
-                video_title_new, video_url_new = get_information(channel_id)
+                video_title_new, video_url_new = youtube_get_information(channel_id)
                 if video_title_new != video_title and video_title != "None":
                     db.change_send_message_status(user_id, send_message=True)
                 db.update_video_title(user_id, video_title_new)

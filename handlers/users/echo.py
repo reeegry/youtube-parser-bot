@@ -1,7 +1,7 @@
 from aiogram import types
 
 from loader import dp
-from utils.db_api.db_sqlite3 import *
+from utils.db_api.db_sqlite import *
 
 
 @dp.message_handler(state=None)

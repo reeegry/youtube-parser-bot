@@ -1,5 +1,5 @@
 from loader import dp, scheduler
-from .db_api.db_sqlite3 import *
+from .db_api.db_sqlite import *
 
 
 async def send_message_if_new_video(dp):
