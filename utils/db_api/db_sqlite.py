@@ -34,13 +34,15 @@ class SQLUser(SQLighter):
         );
         """
 
+    # TODO: delete second user_id
     def get_data(self, status=True):
         with self.connection:
-            return self.cursor.execute("SELECT user.* FROM `user` LEFT JOIN youtube y on user.id=y.user_id WHERE `status` = ?", (status,)).fetchall()
+            return self.cursor.execute("SELECT user.*, y.* FROM `user` LEFT JOIN youtube y on user.id=y.user_id WHERE `status` = ?", 
+                                      (status,))
 
     def subscriber_exists(self, user_id):
         with self.connection:
-            result = self.cursor.execute("SELECT * FROM `user` WHERE `id` = ?", (user_id,)).fetchall()
+            result = self.cursor.execute("SELECT * FROM `user` WHERE `id` = ?", (user_id, )).fetchall()
             return bool(len(result))
 
     def add_subscriber(self, user_id, status=True):
@@ -67,7 +69,7 @@ class SQLYoutube(SQLighter):
 	    "send_message"	BOOLEAN DEFAULT False
         );
         """
-    
+
     def insert_youtube_data(self, user_id, channel_id, last_video_title, status=True):
         with self.connection:
             return self.cursor.execute("INSERT INTO `youtube` (`user_id`, `channel_id`, `last_video_title`) VALUES (?, ?, ?)",
