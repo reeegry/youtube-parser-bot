@@ -11,7 +11,6 @@ async def echo(message: types.Message):
         db.add_subscriber(user_id)
     else:
         db.update_subscription(user_id, True)
-    db.update_channel_id(user_id, message.text)
-    db.update_video_title(user_id, "None")
+    db.youtube_table.insert_youtube_data(user_id, message.text, "None")
     await message.answer(f"Added")
 
