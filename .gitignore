@@ -132,3 +132,5 @@ dmypy.json
 
 # Database
 utils.db_api.db.db
+
+utils.db_api.models
