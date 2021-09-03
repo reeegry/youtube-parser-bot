@@ -1,5 +1,6 @@
 aiogram~=2.12
 environs~=8.0.0
-sqlite3
-apscheduler
-asyncio
+apscheduler==3.7.0
+asyncio==3.4.3
+sqlalchemy==1.4.23
+sqlalchemy-utils==0.37.8
