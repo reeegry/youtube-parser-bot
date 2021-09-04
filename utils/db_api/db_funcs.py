@@ -31,12 +31,22 @@ def youtube_add(user_id, channel_id = Youtube.channel_id,
     pass
 
 
-def youtube_update(user_id, channel_id = Youtube.channel_id, 
-        last_video_title = Youtube.last_video_title):
-    db_user_id = session.query(User.id).filter(User.tg_id==user_id).first()[0]
+def change_yt_send_message_status(tg_id, status):
+    db_user_id = session.query(User.id).filter(User.tg_id==tg_id).first()[0]
+    session.query(Youtube).filter(Youtube.user_id==db_user_id).update({"status": status})
+    session.commit()
+
+
+def youtube_update(tg_id, channel_id = Youtube.channel_id, 
+        last_video_title = Youtube.last_video_title, 
+        last_video_url = Youtube.last_video_url):
+    db_user_id = session.query(User.id).filter(User.tg_id==tg_id).first()[0]
 
     session.query(Youtube).filter(Youtube.user_id==db_user_id). \
-        update({"last_video_title": last_video_title, "channel_id": channel_id})
+        update(
+            {"last_video_title": last_video_title, 
+            "channel_id": channel_id, 
+            "last_video_url": last_video_url})
     session.commit()
 
 

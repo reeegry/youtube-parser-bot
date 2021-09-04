@@ -21,6 +21,6 @@ async def echo(message: types.Message):
     
     channel_exist = await check_channel_exist(user_id, message)
     if not channel_exist:
-        db_funcs.youtube_update(user_id, message.text, "None")
+        db_funcs.youtube_update(tg_id=user_id, channel_id=message.text, last_video_title="None")
     await message.answer(f"Added")
 
