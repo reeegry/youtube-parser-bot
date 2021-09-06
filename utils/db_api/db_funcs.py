@@ -23,12 +23,13 @@ def add_data(tg_id, channel_id = None, last_video_url = None, status = True):
     session.commit()
 
 
-def youtube_add(user_id, channel_id = Youtube.channel_id, 
+def youtube_add(tg_id, channel_id = Youtube.channel_id, 
         last_video_title = Youtube.last_video_title):
-    # youtube = Youtube(user_id=user_id, channel_id=channel_id, last_video_title=last_video_title)
-    # session.add([youtube])
-    # session.commit()
-    pass
+    user = session.query(User).filter(tg_id==tg_id).first()
+    youtube = Youtube(user_id=tg_id, channel_id=channel_id, last_video_title=last_video_title)
+    user.yt_parent.append(youtube)
+    session.add(youtube)
+    session.commit()
 
 
 def change_yt_send_message_status(tg_id, status):

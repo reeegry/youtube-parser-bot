@@ -12,7 +12,7 @@ class Twitch(Base):
     user_id = Column(ForeignKey("user.id"), nullable=False)
     channel_name = Column(String)
     send_message = Column(Boolean, default=False)
-    # tw_child = relationship("User")
+    tw_child = relationship("User", back_populates="tw_parent")
 
     def __repr__(self):
         return f"<TwitchTable({self.user_id=}, {self.channel_name=}, {self.send_message=})>"

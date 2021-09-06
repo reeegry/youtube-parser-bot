@@ -13,7 +13,7 @@ class Youtube(Base):
     last_video_title = Column(String)
     last_video_url = Column(String, nullable=False, default="None")
     send_message = Column(Boolean, default=False)
-    # yt_child = relationship("User")
+    yt_child = relationship("User", back_populates="yt_parent")
 
     def __repr__(self):
         return f"<YoutubeTable({self.channel_id=}, {self.last_video_title=}, \
